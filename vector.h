@@ -2,11 +2,11 @@
 #include "allocator.h"
 namespace york {
 
-template <class t , class alloc=york::allocator>class vector
+template <class t , class alloc=york::allocator<t>> class vector
 {
 public:
 	typedef t*  pointer;
-	typedef t&  reference;;
+	typedef t&  reference;
 	typedef const t* const_pointer;
 	typedef const t& const_reference;
 	typedef size_t  size_type;
@@ -16,7 +16,7 @@ public:
 
 	~vector(void);
 
-	size_type size()const{return length;};
+	const size_type size()const{return len;};
 	size_type length()const{ return len};
 	bool push_bach(t & value)
 	{
