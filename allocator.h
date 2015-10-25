@@ -5,12 +5,14 @@
 #include <cstdlib>
 #include <climits>
 #include <iostream>
+
 using std::cout;
 #ifndef YORK
 #define YORK
 namespace york{
 
 // allocate memory
+
 template<class t>
 inline t* _allocate(ptrdiff_t size, t*)
 {
@@ -53,6 +55,8 @@ void fill_n(t *p, const t &value, const size_t n)
 	}
 	
 }
+
+
 template<class t > 
 // here is the allocator class
 class allocator
@@ -66,6 +70,7 @@ public:
 	typedef const t&        const_reference;
 	typedef size_t          size_type;
 	typedef ptrdiff_t       difference_type;
+	
 	//typedef iter<t>     iterator;
 
 	template <class u >
