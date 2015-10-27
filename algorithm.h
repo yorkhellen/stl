@@ -3,11 +3,11 @@ namespace york
 {
 
  template <class t, class iterator>
- iterator find (iterator  begin, iterator end, t & value)
+ iterator find (iterator  begin, iterator end, const t & value)
  {
-    for(iterator i = begin ; i != end ; ++i)
-		if(  * i == value) return i ;
-	return end ;
+ 
+  while (begin != end  && *begin  != value) ++ begin;
+  return begin;
  }
  
 };

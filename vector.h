@@ -2,8 +2,12 @@
 #include "allocator.h"
 #include "iter.h"
 namespace york {
+template <class t> 
+class iterators: public iter<t>
+{
+ 
 
-
+};
 template <class t , class alloc=york::allocator<t>> class vector
 {
 public:
@@ -12,23 +16,15 @@ public:
 	typedef const t* const_pointer;
 	typedef const t& const_reference;
 	typedef size_t  size_type;
+	typedef class iterators<t>   iterator;
+	vector(void){};
+	vector(size_t t){};
 
-	template <class t>
-	struct iterator public:iter
-	{
-		virtual operator ++(){};
-		virtual operator ++(int){};
-		virtual operator ==(){};
-	};
-
-	vector(void);
-	vector(size_t t);
-
-	~vector(void);
+	~vector(void){};
 
 	const size_type size()const{return len;};
-	iterator begin(){ return front; };
-	iterator end(){ return back; }
+	iterator begin(){ return _front; };
+	iterator end(){ return _end; }
 	iterator cbegin()const { return front; };
 	iterator cend() const { return back; };
 	size_type length()const{ return len};
@@ -64,11 +60,8 @@ private:
 	alloc * Alloc;
 	size_type  len;
 	size_type  capality;
-	iterator<t>  front;
-	iterator<t>  back;
-	
-	
+    iterator  _front;
+	iterator  _end;
 };
-
 };
 

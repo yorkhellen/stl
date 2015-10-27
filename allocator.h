@@ -17,7 +17,7 @@ template<class t>
 inline t* _allocate(ptrdiff_t size, t*)
 {
 	set_new_handler(0);
-	t* tmp static_cast<t*>(::operator new((size_t)(size*sizeof(t))));
+	t* tmp  = static_cast<t*>(::operator new((size_t)(size*sizeof(t))));
 	if( 0 == tmp)
 	{
 #ifdef DEBUG
@@ -61,7 +61,8 @@ template<class t >
 // here is the allocator class
 class allocator
 {
-   private:
+private:
+
 public:
 	typedef t               value_type;
 	typedef t*              pointer;
@@ -72,6 +73,7 @@ public:
 	typedef ptrdiff_t       difference_type;
 	
 	//typedef iter<t>     iterator;
+
 
 	template <class u >
 	struct rebind{
@@ -111,9 +113,6 @@ class allocator<void>
 public:
 	typedef  void * pointer;
 };
-
-
-
 
 };
 #endif
