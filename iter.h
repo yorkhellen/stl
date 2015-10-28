@@ -10,17 +10,17 @@ struct iterator_traits
 	struct iter
 	{
 
-	public:
+	 public:
 		typedef t* pointer;
 		typedef t value_type;
-		iter<t>(){};
-		iter<t>(const york::iter<t> & ls){};
-		virtual iter<t> operator ++(){return *this;};
-		virtual iter<t> operator ++(int){return *this;};
-		virtual bool operator ==(iter<t>){return true;};
-		virtual t & operator *()const{ return *val; }
-		virtual t * operator ->()const { return val; }
-	private:
+		iter<t>(t):this->val(&t){};
+		iter<t>(const york::iter<t> & ls){ pointer = &(ls->val)};
+	     iter<t> operator ++();
+		 iter<t> operator ++(int);
+		 bool operator ==(iter<t>);
+		 t & operator *()const{ return *val; }
+		 t * operator ->()const { return val; }
+	 private:
 		pointer val;
 	};
 };
