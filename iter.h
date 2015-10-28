@@ -12,6 +12,7 @@ namespace york
 		virtual operator ==();
 		virtual operator *()const{ return *val; }
 		virtual operator ->()const { return val; }
+		virtual bool operator !=()const {}
 	private:
 		pointer val;
 
