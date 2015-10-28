@@ -17,7 +17,7 @@ template<class t>
 inline t* _allocate(ptrdiff_t size, t*)
 {
 	set_new_handler(0);
-	t* tmp static_cast<t*>(::operator new((size_t)(size*sizeof(t))));
+	t* tmp  = static_cast<t*>(::operator new((size_t)(size*sizeof(t))));
 	if( 0 == tmp)
 	{
 #ifdef DEBUG
@@ -61,7 +61,8 @@ template<class t >
 // here is the allocator class
 class allocator
 {
-   private:
+private:
+
 public:
 	typedef t               value_type;
 	typedef t*              pointer;
@@ -71,7 +72,7 @@ public:
 	typedef size_t          size_type;
 	typedef ptrdiff_t       difference_type;
 	
-	//typedef iter<t>     iterator;
+
 
 	template <class u >
 	struct rebind{
@@ -88,22 +89,10 @@ public:
 	pointer address(reference x){return static_cast<pointer>(&x)};
 
 	void destroy(pointer p){_destroy(p)};
-
-	pointer allocate(size_type n , const void * hint= 0)
-	{ 
-		return _allocate(static_cast<difference_type>(n), static_cast<pointer>(0));
-	}
-	void deallocate(pointer p, size_type n){deallocate(p)}
-
-	void construct(pointer p , const t & value)
-	{ 
-		_construct(p, value);
-	}
-	allocator(size_type n , const void *  hint  = 0 )
-	{
-		return allocate(n, hint);
-	}
-	~allocator(void);	
+    pointer	allocate(size_t n , const void * hint= 0);
+	void deallocate(pointer p, size_type n){destroy(p)}
+	allocator(size_t n , const void *  hint  = 0 );
+	~allocator(void){destroy};	
 };
 template <>
 class allocator<void>
@@ -111,9 +100,6 @@ class allocator<void>
 public:
 	typedef  void * pointer;
 };
-
-
-
 
 };
 #endif
