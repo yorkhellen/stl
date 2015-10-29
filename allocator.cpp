@@ -11,7 +11,4 @@ template <class t > allocator<t>::allocator(size_t n , const void *  hint  = 0 )
 {
 	return allocate<t>(n, hint);
 };
-
-
-
 ;};
