@@ -20,8 +20,9 @@ struct iterator_traits
 		 bool operator ==(iter<t>);
 		 t & operator *()const{ return *val; }
 		 t * operator ->()const { return val; }
-	 private:
-		pointer val;
+
+
+		 value_type val;
 	};
 };
 

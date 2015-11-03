@@ -15,6 +15,13 @@ class iterators: public iter<t>
 		  return true;
 		return false ;
 	};
+	iterators(const iterators & val)
+	{
+	};
+	iterators(const t  val)
+	{
+		this->val = val;
+	}
 
 };
 
@@ -34,23 +41,26 @@ public:
 	iterator begin(){ return _front; };
 	iterator end(){ return _end; }
 	iterator cbegin()const { return front; };
+
 	iterator cend() const { return back; };
+
 	size_type length()const{ return len};
-	void resize(size_type new_size);
-    void clear();
-	vector<t,alloc>(const vector<t,alloc>& rval);
-	vector<t,alloc> operator = (const vector<t,alloc> & rval);
-	vector<t,alloc> operator [](const int);
 
+	vector(const vector<t,alloc>& rval);
 
+	vector operator = (const vector<t,alloc> & rval);
 
-vector<t,alloc>::vector(void):
-Alloc = new alloc<t>(york::init_size),
-len(0),
-capality(init_size),
-_front(Alloc),
-_end(Alloc+init_size+1)
-{   	 
+    reference operator [](size_type i)
+	{
+		return Alloc[i];
+	};
+	vector(void):
+		Alloc =alloc<t>(york::init_size),
+		len(0),
+		capality(init_size)
+		_front(Alloc);
+	_end(Alloc +init_size +1)
+{  
 };
 
 void push_back(const t & value)

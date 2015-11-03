@@ -12,20 +12,22 @@ using std::cout;
 namespace york{
 
 // allocate memory
-
+	struct _Nonscalar_ptr_iterator_tag
+	{	// pointer to unknown type
+	};
+	struct _Scalar_ptr_iterator_tag
+	{	// pointer to scalar type
+	};
 template<class t>
-inline t* _allocate(ptrdiff_t size, t*)
+inline t* _allocate(size_t size, t*)
 {
-	set_new_handler(0);
-	t* tmp  = static_cast<t*>(::operator new((size_t)(size*sizeof(t))));
-	if( 0 == tmp)
-	{
-#ifdef DEBUG
-		cout<<"out of memory"<<std::endl;
-#endif
+	void * tmp;
+	if (0 == size)
+		;
+	else if (((size_t)(-1) / sizeof(t) < size)
+		|| tmp = ::operator new(size*sizeof(t))) == 0 )
 		exit(1);
-	}
-	return tmp;
+	return static_cast<t *>(tmp);
 }
 // free memory
 template<class t>
@@ -35,9 +37,48 @@ inline void _deallocate(t * buffer)
 }
 // call construct and call placement new
 template<class t1 , class t2>
-inline void  _construct(t1 * p , const t2 & value)
+inline void  _construct(t1 * p , const t2 && value)
 {
-	new(p)static_cast<t1>(value);
+	void * vptr = p;
+	::new(vptr)(static_cast<t1>(value));
+}
+
+template<class t >
+int void _construct(t * ptr)
+{
+	void * vptr = ptr;
+	::new(vptr)t();
+}
+template<class t>
+inline void _destroy(t * ptr)
+{
+	ptr->~t();
+}
+// sp
+template< class t >
+inline void _destory(char *)
+{}
+
+template <class t >
+inline void _destory(wchar_t *)
+{}
+template <class t>
+inline void _destory(unsigned short *)
+{}
+template <class alloc>
+	inline void  _destory_range(typename alloc::pointer _first,
+	typename alloc::pointer _last, alloc & al, 
+	_Nonscalar_ptr_iterator_tag)
+{
+		for (; _first != _last; ++first)
+			al.destory(_first);
+	}
+
+template<class alloc> inline
+void _Destroy_range(typename alloc::pointer _First,
+typename alloc::pointer _Last, alloc& _Al,
+_Scalar_ptr_iterator_tag)
+{	// destroy [_First, _Last), scalar type (do nothing)
 }
 template<class t>
 void fill(t  *p, const  t &value)
